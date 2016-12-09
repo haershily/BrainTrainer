@@ -35,7 +35,7 @@
         android:visibility="visible"
         android:textColor="#3E2723" />
     <TextView
-        android:text="Select Difficulty"
+        android:text="!! Select Difficulty !!"
         android:textSize="30sp"
         android:layout_marginTop="20sp"
         android:layout_weight="1"
@@ -51,9 +51,11 @@
         android:layout_gravity="top"
         android:id="@+id/spinner"
         android:padding="30sp"
-        android:layout_weight="2"
+        android:scrollbarSize="40sp"
+        android:layout_weight=".25"
         android:dropDownWidth="match_parent"
-         />
+        android:background="#C5E1A5"
+        android:popupBackground="#C5E1A5" />
 </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
@@ -207,7 +209,7 @@
         android:textColor="@android:color/black" />
 
     <Button
-        android:text="Play Again?"
+        android:text="Play Again ?"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/playAgainButton"

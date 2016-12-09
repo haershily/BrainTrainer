@@ -71,17 +71,21 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
 
             @Override
             public void onFinish() {
+                float accuracy;
                 playAgainButton.setVisibility(View.VISIBLE);
                 rel1.setVisibility(View.INVISIBLE);
                 rel2.setVisibility(View.VISIBLE);
                 String textfinal="Well Tried :)";
-                if(score>highscore){highscore=score;textfinal="Congratulations :D";}
+                accuracy=(float)score*100/numberofQuestions;
+                String stringAccuracy;
+                stringAccuracy=String.format("Accuracy: %.1f",accuracy);
+                if(score>highscore&&accuracy>=60){highscore=score;textfinal="Congratulations :D";}
                 timerTextView.setText("0s");
                 if(score==0 && numberofQuestions==0)
-                {                finalAnswer.setText("\nYour Score : " + Integer.toString(score)+"/"+Integer.toString(numberofQuestions) + "\n\n" + "Accuracy : 0%\n\n"+" High Score : "+Integer.toString(highscore)+"\n\n"+textfinal+"\n");
+                {                finalAnswer.setText("\nYour Score : " + Integer.toString(score)+"/"+Integer.toString(numberofQuestions) + "\n\n" + "Accuracy : 0.0%\n\n"+" High Score : "+Integer.toString(highscore)+"\n\n"+textfinal+"\n");
                 }
                 else{
-                finalAnswer.setText("\nYour Score : " + Integer.toString(score)+"/"+Integer.toString(numberofQuestions) + "\n\n" + "Accuracy : "+ Float.toString(score*100/numberofQuestions)+"%\n\n"+" High Score : "+Integer.toString(highscore)+"\n\n"+textfinal+"\n");
+                finalAnswer.setText("\nYour Score : " + Integer.toString(score)+"/"+Integer.toString(numberofQuestions) + "\n\n" + stringAccuracy +"%\n\n"+" High Score : "+Integer.toString(highscore)+"\n\n"+textfinal+"\n");
             }}
         }.start();
     }
@@ -91,15 +95,15 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Random rand1=new Random();
         int a,b;
         if(Item.equals("Easy")){
-        a=rand.nextInt(11);
-        b=rand.nextInt(11);}
+        a=rand.nextInt(21)+1;
+        b=rand.nextInt(21)+1;}
         else if(Item.equals("Hard")){
-            a=rand.nextInt(51);
-            b=rand.nextInt(51);
+            a=rand.nextInt(21)+70;
+            b=rand.nextInt(21)+70;
         }
         else{
-            a=rand.nextInt(31);
-            b=rand.nextInt(31);
+            a=rand.nextInt(21)+40;
+            b=rand.nextInt(21)+40;
         }
         int op=rand.nextInt(4);
         locationofcorrectanswer=rand1.nextInt(4);
@@ -111,10 +115,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (i == locationofcorrectanswer) {
                     answers.add(a + b);
                 } else {
-                    incorrectanswer = rand.nextInt(61);
+                    incorrectanswer = rand.nextInt(141)+50;
                     while (incorrectanswer == a + b) {
 
-                        incorrectanswer = rand.nextInt(61);
+                        incorrectanswer = rand.nextInt(141)+50;
                     }
                     answers.add(incorrectanswer);
                 }
@@ -126,12 +130,12 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (i == locationofcorrectanswer) {
                     answers.add(a-b);
                 } else {
-                    incorrectanswer = rand.nextInt(41);
+                    incorrectanswer = rand.nextInt(91);
                     while (incorrectanswer == a-b) {
 
-                        incorrectanswer = rand.nextInt(41);
+                        incorrectanswer = rand.nextInt(91);
                     }
-                    answers.add(incorrectanswer);
+                    answers.add(-1*incorrectanswer);
                 }
             }
         }
@@ -141,10 +145,10 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (i == locationofcorrectanswer) {
                     answers.add(a*b);
                 } else {
-                    incorrectanswer = rand.nextInt(41);
+                    incorrectanswer = rand.nextInt(3000)+1001;
                     while (incorrectanswer == a*b) {
 
-                        incorrectanswer = rand.nextInt(41);
+                        incorrectanswer = rand.nextInt(3000)+1001;
                     }
                     answers.add(incorrectanswer);
                 }
@@ -156,17 +160,17 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
                 if (i == locationofcorrectanswer) {
                     answers.add(a-b);
                 } else {
-                    incorrectanswer = rand.nextInt(41);
+                    incorrectanswer = rand.nextInt(91);
                     while (incorrectanswer == a-b) {
 
-                        incorrectanswer = rand.nextInt(41);
+                        incorrectanswer = rand.nextInt(91);
                     }
                     answers.add(-1*incorrectanswer);
                 }
             }
         }
         else{
-            sumTextView.setText("Q. "+Integer.toString(a) + " / " + Integer.toString(b)+" ?");
+            sumTextView.setText("Q. "+Integer.toString(a) + " ÷ " + Integer.toString(b)+" ?");
             for (int i = 0; i < 4; i++) {
                 if (i == locationofcorrectanswer) {
                     answers.add(a/b);
