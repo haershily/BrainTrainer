@@ -12,22 +12,49 @@
     android:backgroundTint="#90CAF9"
     android:background="@android:color/darker_gray"
     android:visibility="visible">
-
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:weightSum="5"
+        android:id="@+id/startPage"
+        android:orientation="vertical">
     <Button
-        android:text="Go!"
-        android:textSize="70dp"
-        android:padding="40sp"
-        android:layout_width="wrap_content"
+        android:text="Play\nR u Ready ?"
+        android:textSize="50dp"
+        android:padding="20sp"
+        android:layout_weight="2"
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
+
         android:id="@+id/button"
         android:backgroundTint="#FFAB40"
         android:background="@color/colorAccent"
         android:onClick="start"
         android:visibility="visible"
         android:textColor="#3E2723" />
-
+    <TextView
+        android:text="Select Difficulty"
+        android:textSize="30sp"
+        android:layout_marginTop="20sp"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:id="@+id/selectdifficulty"
+        />
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_gravity="top"
+        android:id="@+id/spinner"
+        android:padding="30sp"
+        android:layout_weight="2"
+        android:dropDownWidth="match_parent"
+         />
+</LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -184,7 +211,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/playAgainButton"
-        android:onClick="playAgain"
+        android:onClick="playAgainGo"
         android:textSize="40sp"
         android:padding="20sp"
         android:layout_below="@id/finalAnswer"

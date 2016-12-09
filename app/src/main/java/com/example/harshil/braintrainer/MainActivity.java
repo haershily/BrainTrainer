@@ -1,16 +1,22 @@
 package com.example.harshil.braintrainer;
 
 import android.graphics.Color;
+import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.support.annotation.IntegerRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -19,23 +25,35 @@ import java.util.Random;
 
 import static com.example.harshil.braintrainer.R.id.activity_main;
 import static com.example.harshil.braintrainer.R.id.answer;
+import static com.example.harshil.braintrainer.R.id.button;
 import static com.example.harshil.braintrainer.R.id.rel1;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     Button start,button0,button1,button2,button3,playAgainButton;
     TextView resultTextView,sumTextView,finalAnswer;
     ArrayList<Integer> answers=new ArrayList<Integer>();
+    private String[] spinOptions={"Easy","Medium","Hard"};
     int locationofcorrectanswer;
     TextView pointsTextView;
     int score=0;
+    String Item;
+    LinearLayout startPage;
     int numberofQuestions=0;
     TextView timerTextView;
     RelativeLayout rel1,rel2;
     int highscore=0;
+    Spinner spinner;
+    public void playAgainGo(View view){
+        startPage.setVisibility(View.VISIBLE);
+        rel2.setVisibility(View.INVISIBLE);
+        rel1.setVisibility(View.INVISIBLE);
+    }
     public void playAgain(View view)
     {
         score=0;
         numberofQuestions=0;
+        MediaPlayer mediaPlayer=MediaPlayer.create(getApplicationContext(),R.raw.clock);
+        mediaPlayer.start();
         rel1.setVisibility(View.VISIBLE);
         rel2.setVisibility(View.INVISIBLE);
         timerTextView.setText("30s");
@@ -71,8 +89,18 @@ public class MainActivity extends AppCompatActivity {
     public void generateQuestion(){
         Random rand=new Random();
         Random rand1=new Random();
-        int a=rand.nextInt(31);
-        int b=rand.nextInt(31);
+        int a,b;
+        if(Item.equals("Easy")){
+        a=rand.nextInt(11);
+        b=rand.nextInt(11);}
+        else if(Item.equals("Hard")){
+            a=rand.nextInt(51);
+            b=rand.nextInt(51);
+        }
+        else{
+            a=rand.nextInt(31);
+            b=rand.nextInt(31);
+        }
         int op=rand.nextInt(4);
         locationofcorrectanswer=rand1.nextInt(4);
         answers.clear();
@@ -83,10 +111,10 @@ public class MainActivity extends AppCompatActivity {
                 if (i == locationofcorrectanswer) {
                     answers.add(a + b);
                 } else {
-                    incorrectanswer = rand.nextInt(41);
+                    incorrectanswer = rand.nextInt(61);
                     while (incorrectanswer == a + b) {
 
-                        incorrectanswer = rand.nextInt(41);
+                        incorrectanswer = rand.nextInt(61);
                     }
                     answers.add(incorrectanswer);
                 }
@@ -133,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
 
                         incorrectanswer = rand.nextInt(41);
                     }
-                    answers.add(incorrectanswer);
+                    answers.add(-1*incorrectanswer);
                 }
             }
         }
@@ -178,7 +206,7 @@ public class MainActivity extends AppCompatActivity {
         generateQuestion();
     }
 public void start(View view){
-    start.setVisibility(View.INVISIBLE);
+    startPage.setVisibility(View.INVISIBLE);
     playAgain(findViewById(R.id.playAgainButton));
 
 }
@@ -194,12 +222,30 @@ public void start(View view){
         sumTextView=(TextView)findViewById(R.id.sumTextView);
         pointsTextView=(TextView)findViewById(R.id.pointsTextView);
         button0=(Button)findViewById(R.id.button0);
+        startPage=(LinearLayout)findViewById(R.id.startPage);
         button1=(Button)findViewById(R.id.button1);
         button2=(Button)findViewById(R.id.button2);
         button3=(Button)findViewById(R.id.button3);
         resultTextView=(TextView)findViewById(R.id.answer);
         rel2=(RelativeLayout)findViewById(R.id.rel2);
         finalAnswer=(TextView)findViewById(R.id.finalAnswer);
+        spinner=(Spinner)findViewById(R.id.spinner);
+        ArrayAdapter<String> arrayAdapter=new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item,spinOptions);
+        arrayAdapter.setDropDownViewResource(R.layout.support_simple_spinner_dropdown_item);
+        spinner.setAdapter(arrayAdapter);
+        spinner.setPrompt("Select Difficulty");
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+        Item=adapterView.getItemAtPosition(i).toString();
+        Toast.makeText(this,"Selected : "+Item,Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
 
     }
 }
